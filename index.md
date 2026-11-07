@@ -107,5 +107,4 @@ If we update this Privacy Policy, the revised version will be published at this 
 If you have questions or feedback regarding this Privacy Policy, please contact:
 
 - **Developer:** Hugo EYNARD  
-- **Email:** hugo.eynard@gmail.com  
-- **Repository:** [https://github.com/Hugogo22/causali-privacy-policy](https://github.com/Hugogo22/causali-privacy-policy)  
+- **Email:** hugo.eynard.dev@gmail.com  
