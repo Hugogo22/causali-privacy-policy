@@ -3,108 +3,99 @@
 **Last Updated:** November 7, 2026  
 **Effective Date:** November 7, 2026  
 
-Welcome to **Causali** (the "Application"), developed by **Hugo EYNARD** ("we", "our", or "us"). 
-
-We believe that your personal health, dietary habits, and digestive symptoms are among the most sensitive personal data you possess. Causali is engineered from the ground up on the principle of **Privacy by Design**: an offline-first architecture where your data belongs exclusively to you and never leaves your physical device.
+**Causali** is an offline food and symptom diary application for Android, developed by **Hugo EYNARD** (independent developer).
 
 ---
 
-## 1. Core Architecture: 100% Offline by Design
+## Quick Summary
 
-- **Zero Remote Servers:** We do not operate remote servers, cloud databases, user registration systems, or backend sync infrastructure.
-- **No Internet Access:** Causali does not request or possess the Android `android.permission.INTERNET` or `android.permission.ACCESS_NETWORK_STATE` permissions. The application cannot communicate over the internet, make HTTP/HTTPS network calls, or transmit any data off your device.
-- **Zero Third-Party Tracking & Telemetry:** We do not bundle third-party analytics (e.g., Google Analytics, Firebase), advertising SDKs, tracking frameworks, or remote crash reporting services. All diagnostic telemetry pipelines in bundled libraries have been stripped at the operating system manifest level.
-
----
-
-## 2. Information Handled by the Application
-
-All information you record in Causali is processed, analyzed, and stored strictly locally on your physical device:
-
-### A. Dietary & Nutrition Data
-- Food intake logs, meal names, and meal timestamps.
-- Serving quantities (in grams) and ingredient breakdowns.
-- Nutritional values (calories, macronutrients, and micronutrients).
-- Custom food items, recipes, and barcode associations created by you.
-
-### B. Health & Symptom Data
-- Gastrointestinal and physical symptoms (e.g., bloating, abdominal cramps, pain, nausea, diarrhea, constipation, headache, fatigue).
-- Symptom severity ratings (`MILD`, `MODERATE`, `SEVERE`).
-- Date and time of symptom occurrences.
-
-### C. On-Device Statistical Analysis
-- Causali calculates statistical correlations (Relative Risk, 95% Confidence Intervals, Phi coefficient, and Fisher's exact test p-values) entirely on your device's processor to help you discover relationships between your diet and symptoms.
+- **100% Offline:** Causali has no remote servers, no cloud databases, and no user accounts.
+- **Zero Data Collection:** Your food, symptom, and health entries never leave your device. The developer cannot view, access, or recover your data.
+- **Full Privacy & Security:** Your data is encrypted at rest, excluded from unencrypted cloud backups, and under your complete control.
 
 ---
 
-## 3. Device Permissions & Camera Usage
+## 1. 100% Offline Architecture
 
-Causali requests only the minimum necessary hardware permissions:
-
-### Camera Permission (`android.permission.CAMERA`)
-- **Purpose:** Used solely for scanning retail product barcodes (EAN-13, EAN-8, UPC-A, UPC-E) to match packaged grocery products against our local offline food database.
-- **On-Device Ephemeral Processing:** Camera video frames are analyzed in temporary device memory (RAM) using on-device ML Kit barcode recognition.
-- **Zero Storage or Transmission:** The application **never** captures, photographs, records, saves, or transmits images or video feeds. Once a barcode is decoded or the scanner is closed, camera buffers are immediately freed.
-- **Strictly Optional:** Camera access is entirely optional. You may decline this permission and search or enter foods and barcodes manually without restriction.
+- **No Remote Servers:** Causali does not communicate with external servers or cloud services.
+- **No Internet Access:** Causali does not request or possess Android network permissions (INTERNET or ACCESS_NETWORK_STATE). The Android operating system strictly prevents the application from sending data off your device.
+- **No Third-Party Tracking:** Causali contains zero advertising SDKs, zero analytics trackers, and zero remote crash reporting services. Background telemetry components bundled transitively by on-device libraries are disabled in the application manifest.
 
 ---
 
-## 4. Data Storage & Security Safeguards
+## 2. Information Handled on Your Device
 
-We protect your information with defense-in-depth security:
+All information you record is stored locally in the application's private sandbox on your device:
 
-- **AES-256 Database Encryption at Rest:** Your local database is encrypted using SQLCipher with 256-bit AES encryption.
-- **Hardware-Backed Master Key:** Cryptographic keys are generated and securely stored in the **Android KeyStore** using hardware-backed isolation (TEE / StrongBox) where supported by your device.
-- **Exclusion from OS Cloud Backups:** We have explicitly configured Android backup rules (`backup_rules.xml` and `data_extraction_rules.xml`) to prevent your diary database and security keys from being uploaded to unencrypted Google Drive cloud backups or device-to-device transfers.
-
----
-
-## 5. User Control, Portability & Data Deletion
-
-You retain complete ownership and control over your data:
-
-- **Data Export:** You can export your full diary, custom foods, recipes, and settings at any time in plain JSON format or as a password-protected, AES-256 encrypted ZIP archive.
-- **Data Import:** You can restore or merge your own exported backups at any time.
-- **Permanent Deletion:**
-  - You can delete individual meal or symptom records directly within the diary.
-  - You can permanently and irreversibly destroy all local records and encryption keys at any time by selecting **Clear Data / Clear Storage** in your Android device's app settings, or by uninstalling the application. Because no copies exist on remote servers, deletion from your device is complete and permanent.
+- **Meals & Nutrition:** Meal names, timestamps, portion weights in grams, nutritional values (calories, macros, micros), FODMAP classifications, and custom foods or recipes you create.
+- **Symptoms & Health:** Symptoms you choose to track (such as bloating, abdominal pain, cramps, nausea, diarrhea, constipation, headache, or fatigue), severity ratings (Mild, Moderate, Severe), and timestamps.
+- **Goals & Preferences:** Daily calorie and macronutrient targets, default meal schedules, food presets, and display settings.
+- **Correlations:** Statistical calculations (Relative Risk, 95% Confidence Intervals, Phi coefficient, and p-values) computed on-device to help you discover associations between foods and symptoms.
 
 ---
 
-## 6. International Compliance & Rights
+## 3. Device Permissions
 
-### European Union & UK (GDPR / UK GDPR)
-- **Special Category Data (Article 9):** Causali processes health-related data solely based on your explicit consent, which you give by deliberately logging entries into your personal diary.
-- **Data Subject Rights:** Your rights to Access, Rectification, Erasure, and Data Portability are directly executable by you at any time using the in-app editing, deletion, and backup export features.
+### Camera (Optional)
+- **Purpose:** Used solely to scan retail grocery barcodes (EAN-13, EAN-8, UPC-A, UPC-E) against the offline food database.
+- **Real-Time Memory Processing:** Camera frames are analyzed temporarily in device memory (RAM) via Google ML Kit and released immediately after analysis.
+- **No Photos or Video:** Causali never captures, saves, records, or transmits photos or video frames.
+- **Optional Access:** You can decline or revoke camera permission at any time and search or enter foods and barcodes manually.
+
+---
+
+## 4. Local Security & Storage
+
+- **Database Encryption:** Your diary database (meals, foods, recipes, and symptoms) is encrypted at rest using SQLCipher (AES-256).
+- **Settings Encryption:** Default meal presets stored in application settings are encrypted at rest using AES-256-GCM.
+- **Hardware-Backed Keys:** Encryption keys are generated and protected by the Android KeyStore using hardware-backed isolation (TEE or StrongBox) when available on your device.
+- **Cloud Backup Exclusion:** Android Auto Backup and device-to-device migration rules are configured to exclude your diary database, settings, and encryption keys from being uploaded to Google Drive or transferred unencrypted.
+
+---
+
+## 5. Your Data Control & Deletion
+
+- **Exporting Data:** You can export your full diary, custom foods, recipes, and settings at any time as an unencrypted JSON file or a password-protected AES-256 encrypted ZIP archive using Android's system file picker. Once exported, you are responsible for safeguarding the file in your chosen location.
+- **Importing Data:** You can restore or merge previous backups from files stored on your device.
+- **Deleting Records:** You can edit or delete individual entries directly within the diary at any time.
+- **Erasing All Data:** You can permanently delete all local data and cryptographic keys by clearing the app's storage in Android Settings or by uninstalling Causali. Because no data exists on external servers, local deletion is complete and irreversible.
+
+---
+
+## 6. International Privacy Rights & Disclosures
+
+### European Economic Area & UK (GDPR / UK GDPR)
+- **Data Controller:** Hugo EYNARD is the developer of Causali. Because the application operates offline and transmits no data, the developer has no access to your personal information.
+- **Special Category Data (Article 9):** Health and dietary entries are processed locally on your device based on your explicit consent when you enter them into the application.
+- **Exercising Your Rights:** You can exercise your rights of access, correction, erasure, and data portability directly at any time using the in-app view, edit, delete, and export features.
 
 ### California (CCPA / CPRA)
-- We do not sell, rent, or share personal information or sensitive personal information.
-- We do not track consumers across third-party applications or websites.
+- Causali does not collect, sell, rent, or share personal or sensitive personal information, and does not engage in cross-context behavioral tracking.
 
 ---
 
 ## 7. Children's Privacy
 
-Causali is not directed to individuals under 13 years of age (or under 16 in the EEA/UK). We do not knowingly collect personal information from children.
+Causali is not directed to individuals under 13 years of age (or under 16 in the EEA/UK) and does not collect personal information from anyone.
 
 ---
 
 ## 8. Medical & Health Disclaimer
 
-**Causali is not a medical device (SaMD) and does not provide medical diagnoses, clinical advice, or treatment plans.**  
-The statistical correlations and nutritional values provided by the application are for personal tracking and informational purposes only. Always consult a qualified physician, gastroenterologist, or registered dietitian before making significant changes to your medical treatment or diet.
+**Causali is not a medical device and does not provide medical diagnoses, clinical advice, or treatment plans.**  
+Nutritional data, FODMAP classifications, and statistical correlations are provided solely for personal tracking and informational purposes. Always consult a qualified physician, gastroenterologist, or registered dietitian before making medical decisions or beginning an elimination diet.
 
 ---
 
 ## 9. Changes to This Privacy Policy
 
-If we update this Privacy Policy, the revised version will be published at this repository URL and noted in the application's release notes.
+Any revisions to this Privacy Policy will be published at https://hugogo22.github.io/causali-privacy-policy/ and summarized in the application's release notes.
 
 ---
 
-## 10. Contact Us
+## 10. Contact
 
-If you have questions or feedback regarding this Privacy Policy, please contact:
+For questions or feedback regarding this Privacy Policy, please contact:
 
 - **Developer:** Hugo EYNARD  
 - **Email:** hugo.eynard.dev@gmail.com  
