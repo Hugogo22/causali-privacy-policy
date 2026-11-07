@@ -1,4 +1,12 @@
-title: "Causali — Privacy Policy"
-description: "Privacy-First, 100% Offline Gastrointestinal Food & Symptom Diary"
-theme: jekyll-theme-minimal
-show_downloads: false
+title: "Causali"
+description: "Offline Food & Symptom Diary"
+theme: minima
+header_pages: []
+exclude:
+  - README.md
+
+defaults:
+  - scope:
+      path: ""
+    values:
+      layout: "default"
